@@ -1,7 +1,27 @@
 body {
+
+}
+
+.container {
+	max-width: 800px;
+	text-align: center;
+	margin: 0 auto;
 }
 
 #mapid {
 	height: 500px;
 	width: 600px;
+}
+
+#button-list {
+	margin-bottom: 20px;
+}
+
+ button.map-filter {
+	background: steelblue;
+	color: white;
+	border: none;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 14px;
 }
