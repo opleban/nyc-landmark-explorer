@@ -1,7 +1,7 @@
-body {
 
+h2, h3, h4, h5, h6 {
+	margin: 0;
 }
-
 .container {
 	max-width: 800px;
 	text-align: center;
@@ -9,8 +9,8 @@ body {
 }
 
 #mapid {
-	height: 500px;
-	width: 600px;
+	height: 600px;
+	width: 800px;
 }
 
 #button-list {
@@ -24,4 +24,15 @@ body {
 	margin-right: 5px;
 	margin-bottom: 5px;
 	font-size: 14px;
+}
+
+.landmark-info-card {
+	border: 0.25em solid black;
+	text-align: left;
+	padding: 0.5em;
+	margin: 1em 0;
+}
+
+.landmark-info-card .detail {
+	margin-bottom: 0.15em;
 }
