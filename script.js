@@ -22,13 +22,13 @@ $( document ).ready(function() {
         return data;
     }
 
-    function fetchLandmarkComplaints(bin) {
+    async function fetchLandmarkComplaints(bin) {
         let response = await fetch(`https://data.cityofnewyork.us/resource/wycc-5aqt.json?$bin=${bin}`);
         let data = await response.json();
         return data;
     }
 
-    function fetchLandmarkViolation(bin) {
+    async function fetchLandmarkViolation(bin) {
         let response = await fetch(`https://data.cityofnewyork.us/resource/ck4n-5h6x.json?$bin=${bin}`);
         let data = await response.json();
         return data;
