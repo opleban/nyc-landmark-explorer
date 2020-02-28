@@ -5,7 +5,7 @@ $( document ).ready(function() {
     // FETCH Data
     async function fetchLandmarks() {
       let response = await fetch(`https://data.cityofnewyork.us/resource/x3ar-yjn2.geojson?$LIMIT=5000`);
-      let data = await response.json(;
+      let data = await response.json();
       return data;
     }
 
