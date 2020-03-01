@@ -1,24 +1,3 @@
-
-
-/** 
-
-To simplify things I've created a utility library of functions. 
-We'll be relying on this heavily to quickly get up and running.
-
-Here's a little peak at what's in there and how we'll be using it:
-
-getBoroughNames
-
-fetchLandmarks
-fetchLandmarksWithFilters
-fetchPrimaryStyles
-fetchLandmarkComplaints
-fetchLandmarkViolations
-
-makeFilterButtons
-
-**/
-
 $( document ).ready(function() {
     // Check my script has loaded
     console.log("Hello from script.js");
@@ -82,6 +61,7 @@ $( document ).ready(function() {
             const mapButton = $(`<button class="map-filter primary-style">${styleValue}</button>`);
 
             mapButton.click((e) => {
+                clearLandmarkCard();
                 resetCurrentSelectedFilter();
                 mapButton.css('background', 'lightblue');
                 mapButton.css('color', 'black');
@@ -103,6 +83,7 @@ $( document ).ready(function() {
             const mapButton = $(`<button class="map-filter district">${districtValue}</button>`);
 
             mapButton.click((e) => {
+                clearLandmarkCard();
                 resetCurrentSelectedFilter();
                 mapButton.css('background', 'salmon');
                 mapButton.css('color', 'black');
@@ -119,7 +100,7 @@ $( document ).ready(function() {
     }
 
     function clearLandmarkCard() {
-        $(".landmark-info-card").remove();
+        $("#landmark-info-container").empty();
     }
 
     function getBoroughName(code) {
@@ -147,8 +128,56 @@ $( document ).ready(function() {
 
                 <button> See Complaints</button>
                 <button> See Violations</button>
+                <ul class="complaint-list"></ul>
+                <ul class="violation-list"></ul>
             </div>
         **/
+
+        function showComplaintButton() {
+            // Let's make a button for complaints
+            const complaintButton = $('<button>See Complaints</button>');
+            complaintButton.click(() => { 
+                fetchLandmarkComplaints(bin).then((complaints) => {
+                    $('.complaints-list').remove();
+                    const complaintSection = $("<ul class='complaints-list'><h3>Complaints</h3></ul>");
+                    if (complaints.length > 0) {
+                        const complaintList = complaints.map((complaint) => {
+                            const {date, work_reported} = complaint;
+                            return $(`<li><div>Complaint Date: ${date}</div><div>Work Reported: ${work_reported}</div></li>`)
+                        });
+                        complaintSection.append(complaintList);
+                    } else {
+                        complaintSection.append('<p>No complaints in dataset</p>')
+                    }
+                    landmarkCardDiv.append(complaintSection);
+                });
+            });
+            // add it to our landmark card div
+            landmarkCardDiv.append(complaintButton);
+        }
+
+        function showViolationButton() {
+            // lets make a button for violations
+            const violationButton = $('<button>See Violations</button>');
+            violationButton.click(() => { 
+                fetchLandmarkViolations(bin).then((violations) => {
+                    $('.violations-list').remove();
+                    const violationSection = $("<ul class='violations-list'><h3>Violations</h3></ul>")
+                    if (violations.length > 0) {
+                        const violationList = violations.map((violation) => {
+                            const {vio_date, violation_class} = violation;
+                            return $(`<li><div>Violation Date: ${vio_date}</div><div>Violation Class: ${violation_class}</div></li>`)
+                        });
+                        violationSection.append(violationList);
+                    } else {
+                        violationSection.append("<p>No violations in dataset</p>")
+                    }
+                    landmarkCardDiv.append(violationSection);
+                });
+            });
+            // add it to our landmark card div
+            landmarkCardDiv.append(violationButton);
+        }
 
         // Lets clear the existing card
         clearLandmarkCard();
@@ -170,48 +199,8 @@ $( document ).ready(function() {
         landmarkCardDiv.append(`<div class="detail">Building Type: ${build_type}</div>`);
         landmarkCardDiv.append(`<div class="detail">See it on Google: <a target="_blank" href="https://www.google.com/maps/place/${address}, ${getBoroughName(borough)}, NYC ${zip_code}">here!</a></div>`);
 
-        
-        // Let's make a button for complaints
-        const complaintButton = $('<button>See Complaints</button>');
-        complaintButton.click(() => { 
-            fetchLandmarkComplaints(bin).then((complaints) => {
-                $('.complaints-list').remove();
-                const complaintSection = $("<ul class='complaints-list'><h3>Complaints</h3></ul>");
-                if (complaints.length > 0) {
-                    const complaintList = complaints.map((complaint) => {
-                        const {date, work_reported} = complaint;
-                        return $(`<li><div>Complaint Date: ${date}</div><div>Work Reported: ${work_reported}</div></li>`)
-                    });
-                    complaintSection.append(complaintList);
-                } else {
-                    complaintSection.append('<p>No complaints in dataset</p>')
-                }
-                landmarkCardDiv.append(complaintSection);
-            });
-        });
-        // add it to our landmark card div
-        landmarkCardDiv.append(complaintButton);
-
-        // lets make a button for violations
-        const violationButton = $('<button>See Violations</button>');
-        violationButton.click(() => { 
-            fetchLandmarkViolations(bin).then((violations) => {
-                $('.violations-list').remove();
-                const violationSection = $("<ul class='violations-list'><h3>Violations</h3></ul>")
-                if (violations.length > 0) {
-                    const violationList = violations.map((violation) => {
-                        const {vio_date, violation_class} = violation;
-                        return $(`<li><div>Violation Date: ${vio_date}</div><div>Violation Class: ${violation_class}</div></li>`)
-                    });
-                    violationSection.append(violationList);
-                } else {
-                    violationSection.append("<p>No violations in dataset</p>")
-                }
-                landmarkCardDiv.append(violationSection);
-            });
-        });
-        // add it to our landmark card div
-        landmarkCardDiv.append(violationButton);
+        showComplaintButton();
+        showViolationButton();
 
         $('#landmark-info-container').append(landmarkCardDiv);
     }
@@ -276,17 +265,15 @@ $( document ).ready(function() {
 
     // Let's add filter buttons for our map based on the primary styles
     fetchPrimaryStyles().then((data) => {
-        clearLandmarkCard();
         const styleButtons = makeArchStyleFilterButtons(data, propertyLayer);
         $("#button-list .primary-styles").append(styleButtons);
     });
 
     // Let's add more filter buttons for map based on the historic districts
-    fetchHistoricDistricts().then((data) => {
-        clearLandmarkCard();
-        const districtButtons = makeDistrictFilterButtons(data, propertyLayer);
-        $("#button-list .historic-districts").append(districtButtons);
-    });
+    // fetchHistoricDistricts().then((data) => {
+    //     const districtButtons = makeDistrictFilterButtons(data, propertyLayer);
+    //     $("#button-list .historic-districts").append(districtButtons);
+    // });
 });  
 
 
