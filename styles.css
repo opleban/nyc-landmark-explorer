@@ -6,6 +6,7 @@ h2, h3, h4, h5, h6 {
 	max-width: 800px;
 	text-align: center;
 	margin: 0 auto;
+	padding: 0 20px;
 }
 
 #mapid {
@@ -17,13 +18,24 @@ h2, h3, h4, h5, h6 {
 	margin-bottom: 20px;
 }
 
+#button-list div {
+	margin-bottom: 1em;
+}
+
  button.map-filter {
-	background: steelblue;
 	color: white;
 	border: none;
 	margin-right: 5px;
 	margin-bottom: 5px;
 	font-size: 14px;
+}
+
+button.map-filter.primary-style {
+	background: steelblue;
+}
+
+button.map-filter.district {
+	background: crimson;
 }
 
 .landmark-info-card {
