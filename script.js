@@ -34,16 +34,6 @@ $( document ).ready(function() {
                 layer.setStyle({color:'red', fillColor:'yellow'});
                 currentSelectedFeature = layer;
             });
-
-            //what about when we hover over it
-            layer.on('hover', function(e) {
-                if (currentSelectedFeature) {
-                    currentSelectedFeature.setStyle({color: '#3388ff', fillColor: '#3388ff'})
-                }
-                showLandmarkDisplayCard(feature.properties);
-                layer.setStyle({color:'red', fillColor:'yellow'});
-                currentSelectedFeature = layer;
-            });
         }
     }
 
@@ -249,16 +239,15 @@ $( document ).ready(function() {
     /****************************************************************************************************************/
     /****************************************************************************************************************/
     /****************************************************************************************************************/
-    // Let's start doing things here
+    // We use the functions above to start doing stuff here
 
-    // Let's create our map here:
+    // Let's draw our map here and set up our shape layers
     const mymap = drawMap();
 
-    // Set up our layer on the map whwere we'll be able to store and display and our property data
     const layerOptions = {onEachFeature:onEachFeature, style: function(feature) { return {weight: "2"} } };
     let propertyLayer = L.geoJSON([], layerOptions).addTo(mymap);
 
-    // Fetch some initial landmark data and add it to our map so we can take a look at it
+    // Let's Fetch some initial landmark data and add it to our map so we can take a look at it
     fetchLandmarks().then((data) => {
         propertyLayer.addData(data).addTo(mymap);   
     });
