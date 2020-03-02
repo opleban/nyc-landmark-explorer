@@ -48,3 +48,7 @@ button.map-filter.district {
 .landmark-info-card .detail {
 	margin-bottom: 0.15em;
 }
+
+ul.overview-list {
+	list-style: none;
+}

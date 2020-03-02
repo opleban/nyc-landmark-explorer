@@ -61,6 +61,9 @@ $( document ).ready(function() {
                 fetchLandmarksWithFilter(styleValue, "style_prim").then(function (data) {
                     propertyLayer.addData(data).addTo(mymap);
                 });
+                fetchOverviewByField("style_prim", styleValue).then(function(data){
+                    showOverviewOnLandmarkDisplayCard(data, styleValue);
+                });
             });
 
             return mapButton;
@@ -82,6 +85,9 @@ $( document ).ready(function() {
                 propertyLayer.clearLayers();
                 fetchLandmarksWithFilter(districtValue, "hist_dist").then(function (data) {
                     propertyLayer.addData(data).addTo(mymap);
+                });
+                fetchOverviewByField("hist_dist", districtValue).then(function(data){
+                    showOverviewOnLandmarkDisplayCard(data, districtValue);
                 });
             });
 
@@ -195,6 +201,19 @@ $( document ).ready(function() {
         $('#landmark-info-container').append(landmarkCardDiv);
     }
 
+    function showOverviewOnLandmarkDisplayCard(data, title) {
+        $('#landmark-info-container').empty();
+        const overviewList = $(`<ul class='overview-list'><h2>${title}</h2></ul>`)
+        const overviewItems = Object.keys(data[0]).map(function(key) {
+            const field = key;
+            const value = data[0][key];
+            return $(`<li>${field} - ${value}</li>`);
+        });
+        overviewList.append(overviewItems);
+        $('#landmark-info-container').append(overviewList);
+
+    }
+
 
     /***************
     EDIT CODE HERE
@@ -232,6 +251,13 @@ $( document ).ready(function() {
 
     async function fetchLandmarkComplaints(bin) {
         let response = await fetch(`https://data.cityofnewyork.us/resource/ck4n-5h6x.json?bin=${bin}`);
+        let data = await response.json();
+        return data;
+    }
+
+    async function fetchOverviewByField(fieldName, fieldValue) {
+        // Let's have this function fetch the total number of landmarks for a specific category of landmarks
+        let response = await fetch(`https://data.cityofnewyork.us/resource/x3ar-yjn2.json?$SELECT=count(*) AS count_of_landmarks&$WHERE=${fieldName}='${fieldValue}'`);
         let data = await response.json();
         return data;
     }
