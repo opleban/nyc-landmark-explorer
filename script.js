@@ -211,38 +211,50 @@ $( document ).ready(function() {
     ***************/
 
     async function fetchLandmarks() {
-      let response = await fetch(`https://data.cityofnewyork.us/resource/x3ar-yjn2.geojson?$LIMIT=5000`);
-      let data = await response.json();
+        alert('Fill in the API call to complete the fetchLandmarks function!');
+        let data = [];
+      // let response = await fetch(<INERT API URL HERE>);
+      // let data = await response.json();
       return data;
     }
 
     async function fetchLandmarksWithFilter(filterValue, filterType) {
-      let response = await fetch(`https://data.cityofnewyork.us/resource/x3ar-yjn2.geojson?$WHERE=${filterType}='${filterValue}'&$LIMIT=5000`);
-      let data = await response.json();
+      alert('Fill in the API call to complete the fetchLandmarks function!');
+        let data = [];
+      // let response = await fetch(<<INSERT API URL HERE>>);
+      // let data = await response.json();
       return data;
     }
 
     async function fetchPrimaryStyles() {
-        let response = await fetch(`https://data.cityofnewyork.us/resource/x3ar-yjn2.json?$SELECT=style_prim, count(style_prim) as count_of_landmarks&$GROUP=style_prim&$ORDER=count_of_landmarks DESC&$LIMIT=20`);
-        let data = await response.json();
-        return data;
-    }
-
-    async function fetchHistoricDistricts() {
-        let response = await fetch(`https://data.cityofnewyork.us/resource/x3ar-yjn2.json?$SELECT=hist_dist, count(hist_dist) as count_of_landmarks&$GROUP=hist_dist&$ORDER=count_of_landmarks DESC&$LIMIT=20`);
-        let data = await response.json();
+        alert('Fill in the API call to complete the fetchPrimaryStyles function!');
+        let data = [];
+     // let response = await fetch(<<INSERT API URL HERE>>);
+     // let data = await response.json();
         return data;
     }
 
     async function fetchLandmarkViolations(bin) {
-        let response = await fetch(`https://data.cityofnewyork.us/resource/wycc-5aqt.json?bin=${bin}`);
-        let data = await response.json();
+        alert('Fill in the API call to complete the fetchLandmarkViolations function!');
+        let data = [];
+     // let response = await fetch(<<INSERT API URL HERE>>);
+     // let data = await response.json();
         return data;
     }
 
     async function fetchLandmarkComplaints(bin) {
-        let response = await fetch(`https://data.cityofnewyork.us/resource/ck4n-5h6x.json?bin=${bin}`);
-        let data = await response.json();
+        alert('Fill in the API call to complete the fetchLandmarkComplaints function!');
+        let data = [];
+     // let response = await fetch(<<INSERT API URL HERE>>);
+     // let data = await response.json();
+        return data;
+    }
+
+    async function fetchHistoricDistricts() {
+        alert('Fill in the API call to complete the fetchHistoricDistricts function!');
+        let data = [];
+     // let response = await fetch(<<INSERT API URL HERE>>);
+     // let data = await response.json();
         return data;
     }
 
