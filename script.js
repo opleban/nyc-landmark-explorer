@@ -270,10 +270,10 @@ $( document ).ready(function() {
     });
 
     // Let's add more filter buttons for map based on the historic districts
-    // fetchHistoricDistricts().then((data) => {
-    //     const districtButtons = makeDistrictFilterButtons(data, propertyLayer);
-    //     $("#button-list .historic-districts").append(districtButtons);
-    // });
+    fetchHistoricDistricts().then((data) => {
+        const districtButtons = makeDistrictFilterButtons(data, propertyLayer);
+        $("#button-list .historic-districts").append(districtButtons);
+    });
 });  
 
 
