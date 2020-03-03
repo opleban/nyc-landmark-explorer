@@ -1,4 +1,6 @@
 # NYC Landmark Explorer
+Author: Ori Pleban
+Email: ori@pleban.org
 
 ## About
 A simple exploration app built on NYC Open Data to filter and explore the NYC Individual Landmark and Historical District Building Dataset
